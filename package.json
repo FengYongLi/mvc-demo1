@@ -5,10 +5,10 @@
   "name": "mvc-demo1",
   "version": "1.0.0",
   "main": "index.js",
+  "repository": "git@github.com:FengYongLi/mvc-demo1.git",
+  "author": "LiYongFeng <506076395@qq.com>",
   "license": "MIT",
   "dependencies": {
     "jquery": "^3.6.0"
-  },
-  "repository": "git@github.com:FengYongLi/mvc-demo1.git",
-  "author": "LiYongFeng <506076395@qq.com>"
+  }
 }
