@@ -11263,6 +11263,9 @@ var _jquery2 = _interopRequireDefault(_jquery);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var html = '\n  <section id="app1">\n    <div class="output">\n      <span id="number">100</span>\n    </div>\n    <div class="actions">\n      <button id="add1">+1</button>\n      <button id="minus1">-1</button>\n      <button id="mul2">*2</button>\n      <button id="divide2">\xF72</button>\n    </div>\n  </section>\n';
+var $element = (0, _jquery2.default)(html).prependTo((0, _jquery2.default)('.page'));
+
 var $button1 = (0, _jquery2.default)('#add1');
 var $button2 = (0, _jquery2.default)('#minus1');
 var $button3 = (0, _jquery2.default)('#mul2');
@@ -11317,17 +11320,23 @@ var _jquery2 = _interopRequireDefault(_jquery);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var html = '\n  <section id="app2">\n    <ol class="tabBar">\n      <li>left</li>\n      <li>right</li>\n    </ol>\n    <ol class="tabContent">\n      <li>\u5185\u5BB91</li>\n      <li>\u5185\u5BB92</li>\n    </ol>\n  </section>\n';
+var $element = (0, _jquery2.default)(html).prependTo((0, _jquery2.default)('.page'));
+
 var $tabBar = (0, _jquery2.default)('#app2 .tabBar');
 var $tabContent = (0, _jquery2.default)('#app2 .tabContent');
 
+var localKey = 'xxx';
+var index = localStorage.getItem(localKey) || 0;
 $tabBar.on('click', 'li', function (e) {
   var $li = (0, _jquery2.default)(e.currentTarget);
   $li.addClass('selected').siblings().removeClass('selected');
   var index = $li.index();
+  localStorage.setItem(localKey, index);
+
   $tabContent.children().eq(index).addClass('active').siblings().removeClass('active');
 });
-// 默认状态 第 0 个被点击
-$tabBar.children().eq(0).trigger('click');
+$tabBar.children().eq(index).trigger('click');
 },{"./app2.css":"app2.css","jquery":"..\\node_modules\\jquery\\dist\\jquery.js"}],"app3.css":[function(require,module,exports) {
 
 var reloadCSS = require('_css_loader');
@@ -11344,14 +11353,38 @@ require('/app3.css');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var html = '\n  <section id="app3">\n    <div class="square"></div>\n  </section>\n';
+var $element = (0, _jquery2.default)(html).prependTo((0, _jquery2.default)('.page'));
+
 var $square = (0, _jquery2.default)('#app3 .square');
 
+var localKey = 'zzz';
+//yes no undefined 三种状态
+//1. localStorage.getItem(localKey) === 'yes' 
+// 说明添加了 active，所以是 true 返回localStorage.getItem(localKey)就行
+//2. 如果不等于 'yes'呢？有两种情况，要么是 'no'，要么是 undefined
+// 说明没有添加 active 是默认状态
+//const active = localStorage.getItem(localKey) === 'yes' ? true :false
+//所以可以写成下边这样
+var active = localStorage.getItem(localKey) === 'yes';
+
+//if (active) {
+//$square.addClass('active')
+//} else {
+//$square.removeClass('active')
+//}
+//上边代码改为下边代码
+//toggleClass 接受两个参数 一个是字符串，一个是布尔值
+$square.toggleClass('active', active);
+
 $square.on('click', function () {
-  //$square.addClass('active')
-  // 这时jquery内置的一个方法
-  // 如果有active就删除，如果没有就添加
-  // 这样可以控制点击左右易懂
-  $square.toggleClass('active');
+  if ($square.hasClass('active')) {
+    $square.removeClass('active');
+    localStorage.setItem(localKey, 'no');
+  } else {
+    $square.addClass('active');
+    localStorage.setItem(localKey, 'yes');
+  }
 });
 },{"jquery":"..\\node_modules\\jquery\\dist\\jquery.js","/app3.css":"app3.css"}],"app4.css":[function(require,module,exports) {
 
@@ -11368,6 +11401,9 @@ var _jquery2 = _interopRequireDefault(_jquery);
 require('/app4.css');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var html = '\n  <section id="app4">\n    <div class="circle"></div>\n  </section>\n';
+var $element = (0, _jquery2.default)(html).prependTo((0, _jquery2.default)('.page'));
 
 var $circle = (0, _jquery2.default)('#app4 .circle');
 
@@ -11419,7 +11455,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = '' || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + '58626' + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + '58584' + '/');
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
 
